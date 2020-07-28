@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -95,6 +96,28 @@ public class TestCase {
     public void iterateStream(){
         //get all apple's name
         apples.stream().map(Apple::getColor).forEach(System.out::println);
+
+        //test word length
+        List<String> list = Arrays.asList("Java8","hello world!","welcome to new world!");
+        list.stream().map(String::length).forEach(System.out::println);
+
+        //get all apple's name length
+
+        apples.stream().map(Apple::getColor).map(String::length).forEach(System.out::println);
+    }
+
+    @Test
+    public void mapTest(){
+        String[] str = {"Hello","World"};
+        Arrays.stream(str).map(w->w.split("")).
+                map(Arrays::stream)
+                .distinct()
+                .forEach(System.out::println);
+        Arrays.stream(str).map(w->w.split("")).
+                flatMap(Arrays::stream)
+                .distinct()
+                .forEach(System.out::println);
+
     }
     public static void main(String[] args) {
         int a = 1;
