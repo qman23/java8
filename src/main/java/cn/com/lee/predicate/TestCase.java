@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -12,7 +14,10 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TestCase {
 
@@ -119,9 +124,40 @@ public class TestCase {
                 .forEach(System.out::println);
 
     }
-    public static void main(String[] args) {
-        int a = 1;
-        Runnable r = ()->System.out.println(a);
 
+    @Test
+    public void flatmapTest(){
+        String[] arr = {"Hello","World"};
+        List<String> list = Arrays.asList(arr);
+        List<String> results = list.stream().map(w->w.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+        for (String s:results){
+             System.out.println(s);
+        }
+    }
+
+    public static int add(int a,int b){
+        return a+b;
+    }
+    public static void main(String[] args) {
+//        int a = 1;
+//        Runnable r = ()->System.out.println(a);
+        List<String> list = Arrays.asList("f","b","a","c");
+        List<String> result = list.stream().sorted((a,b)->{
+            return b.compareTo(a);
+        }).collect(Collectors.toList());
+        System.out.println(Arrays.binarySearch(result.toArray(),"c"));
+
+        String content = "hello, e-mail, electricity";
+        String pattern = "el";
+        Matcher ma = Pattern.compile(pattern).matcher(content);
+        int count = 0;
+        while(ma.find()){
+            System.out.println(ma.start());
+            count++;
+        }
+        System.out.println(pattern+"出现了:"+count+"次");
     }
 }
